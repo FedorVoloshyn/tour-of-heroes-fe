@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 
 import { Hero } from './hero';
-import { HEROES } from './mock-heroes';
 
 import { Observable, of } from 'rxjs';
 import { MessageService } from './message.service';
@@ -14,32 +13,46 @@ import { catchError, map, tap } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class HeroService {
-  private heroesUrl = 'http://localhost:1488/api/heroes';
+  private heroesBaseUrl = 'http://localhost:1488/api/heroes';
 
   constructor(private http: HttpClient,
               private messageService: MessageService) { }
 
   getHeroes(): Observable<Hero[]> {
-    const url = `${this.heroesUrl}`;
-    return this.http.get<Hero[]>(url).pipe(
+    return this.http.get<Hero[]>(this.heroesBaseUrl).pipe(
       tap(_ => this.messageService.add('HeroService: fetched heroes')),
       catchError(this.handleError<Hero[]>(`getHeroes`))
     );
   }
 
   getHero(id: number): Observable<Hero> {
-    const url = `${this.heroesUrl}/${id}`;
+    const url = `${this.heroesBaseUrl}/${id}`;
     return this.http.get<Hero>(url).pipe(
       tap(_ => this.messageService.add(`fetched hero id=${id}`)),
       catchError(this.handleError<Hero>(`getHero id=${id}`))
     );
   }
 
-  pushHero(id: number): Observable<Hero> {
-    const url = `${this.heroesUrl}/${id}`;
-    return this.http.get<Hero>(url).pipe(
-      tap(_ => this.messageService.add(`fetched hero id=${id}`)),
-      catchError(this.handleError<Hero>(`getHero id=${id}`))
+  updateHero(hero: Hero): Observable<Hero> {
+    const url = `${this.heroesBaseUrl}/${hero.id}`;
+    return this.http.put<Hero>(url, hero).pipe(
+      tap(_ => this.messageService.add(`updated hero id=${hero.id}`)),
+      catchError(this.handleError<Hero>(`updateHero id=${hero.id}`))
+    );
+  }
+
+  addHero(hero: Hero): Observable<Hero> {
+    return this.http.post<Hero>(this.heroesBaseUrl, hero).pipe(
+      tap(_ => this.messageService.add(`updated hero id=${hero.id}`)),
+      catchError(this.handleError<Hero>(`addHero id=${hero.id}`))
+    );
+  }
+
+  deleteHero(id: number): Observable<Hero> {
+    const url = `${this.heroesBaseUrl}/${id}`;
+    return this.http.delete<Hero>(url).pipe(
+      tap(_ => this.messageService.add(`deleted hero id=${id}`)),
+      catchError(this.handleError<Hero>(`deleteHero id=${id}`))
     );
   }
 
