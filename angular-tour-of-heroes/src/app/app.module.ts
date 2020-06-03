@@ -10,6 +10,9 @@ import { HeroDetailComponent } from './hero-detail/hero-detail.component';
 import { MessagesComponent } from './messages/messages.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { GlobalErrorHandler } from './core/error-handler/global-error-handler';
+import { AuthCallbackComponent } from './auth-callback/auth-callback.component';
+import { HeaderComponent } from './shell/header/header.component';
+import { ShellComponent } from './shell/shell.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +20,10 @@ import { GlobalErrorHandler } from './core/error-handler/global-error-handler';
     HeroesComponent,
     HeroDetailComponent,
     MessagesComponent,
-    DashboardComponent
+    DashboardComponent,
+    AuthCallbackComponent,
+    HeaderComponent,
+    ShellComponent
   ],
   imports: [
     BrowserModule,
