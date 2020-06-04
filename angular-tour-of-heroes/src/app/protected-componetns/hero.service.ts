@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { Hero } from './hero';
+import { Hero } from '../shared/models/hero';
 
 import { Observable, of } from 'rxjs';
 import { MessageService } from './message.service';
@@ -13,7 +13,7 @@ import { catchError, map, tap } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class HeroService {
-  private heroesBaseUrl = 'http://localhost:1488/api/heroes';
+  private heroesBaseUrl = 'http://localhost:5050/api/heroes';
 
   constructor(private http: HttpClient,
               private messageService: MessageService) { }
