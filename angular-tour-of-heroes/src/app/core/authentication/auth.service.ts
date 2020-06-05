@@ -65,7 +65,7 @@ export function getClientSettings(): UserManagerSettings {
       authority: 'http://localhost:5000',
       client_id: 'tour_of_heroes_spa',
       redirect_uri: 'http://localhost:4200/auth-callback',
-      post_logout_redirect_uri: 'http://localhost:4200/',
+      post_logout_redirect_uri: 'http://localhost:4200/home',
       response_type: 'id_token token',
       scope: 'openid profile email api.read',
       filterProtocolClaims: true,

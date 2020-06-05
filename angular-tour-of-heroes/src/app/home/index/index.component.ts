@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../../core/authentication/auth.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-index',
@@ -7,9 +9,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class IndexComponent implements OnInit {
 
-  constructor() { }
+  isAuthenticated: boolean;
+  subscription: Subscription;
+
+  constructor(private authService: AuthService) { }
 
   ngOnInit(): void {
+    this.subscription = this.authService.authNavStatus$.subscribe(status => this.isAuthenticated = status);
   }
 
 }

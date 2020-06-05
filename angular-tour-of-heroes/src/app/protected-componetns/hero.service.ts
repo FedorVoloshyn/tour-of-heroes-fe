@@ -18,39 +18,77 @@ export class HeroService {
   constructor(private http: HttpClient,
               private messageService: MessageService) { }
 
-  getHeroes(): Observable<Hero[]> {
-    return this.http.get<Hero[]>(this.heroesBaseUrl).pipe(
+  getHeroes(token: string): Observable<Hero[]> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Authorization': token
+      })
+    };
+
+    return this.http.get<Hero[]>(this.heroesBaseUrl, httpOptions).pipe(
       tap(_ => this.messageService.add('HeroService: fetched heroes')),
       catchError(this.handleError<Hero[]>(`getHeroes`))
     );
   }
 
-  getHero(id: number): Observable<Hero> {
+  getHero(id: number, token: string): Observable<Hero> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Authorization': token
+      })
+    };
+
     const url = `${this.heroesBaseUrl}/${id}`;
-    return this.http.get<Hero>(url).pipe(
+
+    return this.http.get<Hero>(url, httpOptions).pipe(
       tap(_ => this.messageService.add(`fetched hero id=${id}`)),
       catchError(this.handleError<Hero>(`getHero id=${id}`))
     );
   }
 
-  updateHero(hero: Hero): Observable<Hero> {
+  updateHero(hero: Hero, token: string): Observable<Hero> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Authorization': token
+      })
+    };
+
     const url = `${this.heroesBaseUrl}/${hero.id}`;
-    return this.http.put<Hero>(url, hero).pipe(
+
+    return this.http.put<Hero>(url, hero, httpOptions).pipe(
       tap(_ => this.messageService.add(`updated hero id=${hero.id}`)),
       catchError(this.handleError<Hero>(`updateHero id=${hero.id}`))
     );
   }
 
-  addHero(hero: Hero): Observable<Hero> {
-    return this.http.post<Hero>(this.heroesBaseUrl, hero).pipe(
+  addHero(hero: Hero, token: string): Observable<Hero> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Authorization': token
+      })
+    };
+
+    return this.http.post<Hero>(this.heroesBaseUrl, hero, httpOptions).pipe(
       tap(_ => this.messageService.add(`updated hero id=${hero.id}`)),
       catchError(this.handleError<Hero>(`addHero id=${hero.id}`))
     );
   }
 
-  deleteHero(id: number): Observable<Hero> {
+  deleteHero(id: number, token: string): Observable<Hero> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Authorization': token
+      })
+    };
+
     const url = `${this.heroesBaseUrl}/${id}`;
-    return this.http.delete<Hero>(url).pipe(
+
+    return this.http.delete<Hero>(url, httpOptions).pipe(
       tap(_ => this.messageService.add(`deleted hero id=${id}`)),
       catchError(this.handleError<Hero>(`deleteHero id=${id}`))
     );

@@ -4,7 +4,7 @@ import { AuthCallbackComponent } from './auth-callback/auth-callback.component';
 
 const routes: Routes = [
   { path: 'auth-callback', component: AuthCallbackComponent  },
-  { path: '**', redirectTo: '', pathMatch: 'full' }
+  { path: '', redirectTo: '/home', pathMatch: 'full' }
 ];
 
 @NgModule({

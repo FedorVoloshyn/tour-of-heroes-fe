@@ -11,7 +11,7 @@ Shell.childRoutes([
     { path: 'heroes', component: HeroesComponent, canActivate: [AuthGuard]  },
     { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard]  },
     { path: 'detail/:id', component: HeroDetailComponent, canActivate: [AuthGuard]  },
-    // { path: '', redirectTo: '/dashboard', pathMatch: 'full', canActivate: [AuthGuard] },
+    { path: '', redirectTo: '/dashboard', pathMatch: 'full', canActivate: [AuthGuard] },
   ])
 ];
 

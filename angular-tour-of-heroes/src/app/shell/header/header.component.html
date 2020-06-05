@@ -1,7 +1,7 @@
 <header> 
     <div class="navbar navbar-dark bg-dark box-shadow">
       <div class="container d-flex justify-content-between">
-        <a routerLink="/" class="navbar-brand d-flex align-items-center">
+        <a routerLink="/home" class="navbar-brand d-flex align-items-center">
           <strong>Custom Solutions Heroes</strong>
         </a>
         <nav *ngIf="!isAuthenticated" class="my-2 my-md-0 mr-md-3">
@@ -10,6 +10,7 @@
         </nav>
         <nav *ngIf="isAuthenticated" class="my-2 my-md-0 mr-md-3">
            <a class="p-2 text-light" routerLink="/dashboard">Heroes dashboard</a>  
+           <a class="p-2 text-light" routerLink="/heroes">Heroes list</a>  
            <a class="p-2 text-light" (click)="signout()" href="javascript:void(0)">Signout {{name}}</a>               
         </nav>
       </div>    
