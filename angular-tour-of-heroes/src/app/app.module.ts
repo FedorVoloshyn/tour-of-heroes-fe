@@ -1,10 +1,12 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, ErrorHandler  } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+
+import { BasicAuthInterceptor } from './core/interceptor/basic-auth.interceptor';
 
 import { GlobalErrorHandler } from './core/error-handler/global-error-handler';
 import { AuthCallbackComponent } from './auth-callback/auth-callback.component';
@@ -35,6 +37,7 @@ import { ShellModule } from './shell/shell.module';
     AppRoutingModule
   ],
   providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: BasicAuthInterceptor, multi: true },
     ConfigService,
     { provide: ErrorHandler, useClass: GlobalErrorHandler}
   ],

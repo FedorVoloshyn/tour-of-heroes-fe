@@ -39,6 +39,23 @@ export class AuthService extends BaseService {
       this.authNavStatusSource.next(this.isAuthenticated());
   }
 
+  async getAuthorizationHeaderValue(): Promise<string> {
+    this.user = await this.manager.getUser();
+    if (!this.user) {
+      return '';
+    }
+    return `${this.user.token_type} ${this.user.access_token}`;
+  }
+
+  async getIsLoggedIn(): Promise<boolean> {
+    this.user = await this.manager.getUser();
+    return this.user && !this.user.expired;
+  }
+
+  startSignIn(): Promise<void> {
+    return this.manager.signinRedirect();
+  }
+
   register(userRegistration: any) {
     return this.http.post(this.configService.authApiURI + '/account', userRegistration).pipe(catchError(this.handleError));
   }
@@ -67,7 +84,7 @@ export function getClientSettings(): UserManagerSettings {
       redirect_uri: 'http://localhost:4200/auth-callback',
       post_logout_redirect_uri: 'http://localhost:4200/home',
       response_type: 'id_token token',
-      scope: 'openid profile email api.read',
+      scope: 'openid profile email api.read offline_access',
       filterProtocolClaims: true,
       loadUserInfo: true,
       automaticSilentRenew: true,
